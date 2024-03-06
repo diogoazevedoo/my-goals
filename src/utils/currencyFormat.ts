@@ -1,6 +1,6 @@
 export function currencyFormat(value: number) {
-  return value.toLocaleString("pt-BR", {
+  return value.toLocaleString("pt-PT", {
     style: "currency",
-    currency: "BRL",
+    currency: "EUR",
   })
 }

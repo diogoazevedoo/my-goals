@@ -39,19 +39,19 @@ export default function Home() {
       const totalAsNumber = Number(total.toString().replace(",", "."))
 
       if (isNaN(totalAsNumber)) {
-        return Alert.alert("Erro", "Valor inválido.")
+        return Alert.alert("Error", "Invalid value.")
       }
 
       console.log({ name, total: totalAsNumber })
 
       Keyboard.dismiss()
       handleBottomSheetClose()
-      Alert.alert("Sucesso", "Meta cadastrada!")
+      Alert.alert("Success", "Goal registred!")
 
       setName("")
       setTotal("")
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível cadastrar.")
+      Alert.alert("Error", "Register can't be done.")
       console.log(error)
     }
   }
@@ -72,7 +72,7 @@ export default function Home() {
       setTransactions(
         response.map((item) => ({
           ...item,
-          date: dayjs(item.created_at).format("DD/MM/YYYY [às] HH:mm"),
+          date: dayjs(item.created_at).format("DD/MM/YYYY [at] HH:mm"),
         }))
       )
     } catch (error) {
@@ -88,8 +88,8 @@ export default function Home() {
   return (
     <View className="flex-1 p-8">
       <Header
-        title="Suas metas"
-        subtitle="Poupe hoje para colher os frutos amanhã."
+        title="Your goals"
+        subtitle="Save today to reap the rewards tomorrow."
       />
 
       <Goals
@@ -102,20 +102,20 @@ export default function Home() {
 
       <BottomSheet
         ref={bottomSheetRef}
-        title="Nova meta"
+        title="New goal"
         snapPoints={[0.01, 284]}
         onClose={handleBottomSheetClose}
       >
-        <Input placeholder="Nome da meta" onChangeText={setName} value={name} />
+        <Input placeholder="Goal name" onChangeText={setName} value={name} />
 
         <Input
-          placeholder="Valor"
+          placeholder="Value"
           keyboardType="numeric"
           onChangeText={setTotal}
           value={total}
         />
 
-        <Button title="Criar" onPress={handleCreate} />
+        <Button title="Create" onPress={handleCreate} />
       </BottomSheet>
     </View>
   )

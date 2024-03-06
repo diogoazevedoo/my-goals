@@ -61,7 +61,7 @@ export default function Details() {
           percentage: (goal.current / goal.total) * 100,
           transactions: transactions.map((item) => ({
             ...item,
-            date: dayjs(item.created_at).format("DD/MM/YYYY [às] HH:mm"),
+            date: dayjs(item.created_at).format("DD/MM/YYYY [at] HH:mm"),
           })),
         })
 
@@ -77,7 +77,7 @@ export default function Details() {
       let amountAsNumber = Number(amount.replace(",", "."))
 
       if (isNaN(amountAsNumber)) {
-        return Alert.alert("Erro", "Valor inválido.")
+        return Alert.alert("Error", "Invalid value.")
       }
 
       if (type === "down") {
@@ -86,7 +86,7 @@ export default function Details() {
 
       console.log({ goalId, amount: amountAsNumber })
 
-      Alert.alert("Sucesso", "Transação registrada!")
+      Alert.alert("Sucesss", "Transaction registred!")
 
       handleBottomSheetClose()
       Keyboard.dismiss()
@@ -116,24 +116,24 @@ export default function Details() {
 
       <Transactions transactions={goal.transactions} />
 
-      <Button title="Nova transação" onPress={handleBottomSheetOpen} />
+      <Button title="New transaction" onPress={handleBottomSheetOpen} />
 
       <BottomSheet
         ref={bottomSheetRef}
-        title="Nova transação"
+        title="New transaction"
         snapPoints={[0.01, 284]}
         onClose={handleBottomSheetClose}
       >
         <TransactionTypeSelect onChange={setType} selected={type} />
 
         <Input
-          placeholder="Valor"
+          placeholder="Value"
           keyboardType="numeric"
           onChangeText={setAmount}
           value={amount}
         />
 
-        <Button title="Confirmar" onPress={handleNewTransaction} />
+        <Button title="Confirm" onPress={handleNewTransaction} />
       </BottomSheet>
     </View>
   )
