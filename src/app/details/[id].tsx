@@ -7,6 +7,7 @@ import dayjs from "dayjs"
 
 // DATABASE
 import { useGoalRepository } from "@/database/useGoalRepository"
+import { useTransactionRepository } from "@/database/useTransactionRepository"
 
 // COMPONENTS
 import { Input } from "@/components/Input"
@@ -44,6 +45,7 @@ export default function Details() {
 
   // DATABASE
   const useGoal = useGoalRepository()
+  const useTransaction = useTransactionRepository()
 
   // BOTTOM SHEET
   const bottomSheetRef = useRef<Bottom>(null)
@@ -54,7 +56,7 @@ export default function Details() {
     try {
       if (goalId) {
         const goal = useGoal.show(goalId)
-        const transactions = mocks.transactions
+        const transactions = useTransaction.findByGoal(goalId)
 
         if (!goal || !transactions) {
           return router.back()
@@ -90,7 +92,7 @@ export default function Details() {
         amountAsNumber = amountAsNumber * -1
       }
 
-      console.log({ goalId, amount: amountAsNumber })
+      useTransaction.create({ goalId, amount: amountAsNumber })
 
       Alert.alert("Sucesss", "Transaction registred!")
 
@@ -99,6 +101,8 @@ export default function Details() {
 
       setAmount("")
       setType("up")
+
+      fetchDetails()
     } catch (error) {
       console.log(error)
     }
