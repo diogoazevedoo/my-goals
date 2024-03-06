@@ -15,6 +15,7 @@ import { Transactions, TransactionsProps } from "@/components/Transactions"
 
 // DATABASE
 import { useGoalRepository } from "@/database/useGoalRepository"
+import { useTransactionRepository } from "@/database/useTransactionRepository"
 
 // UTILS
 import { mocks } from "@/utils/mocks"
@@ -30,6 +31,7 @@ export default function Home() {
 
   // DATABASE
   const useGoal = useGoalRepository()
+  const useTransactions = useTransactionRepository()
 
   // BOTTOM SHEET
   const bottomSheetRef = useRef<Bottom>(null)
@@ -56,6 +58,8 @@ export default function Home() {
 
       setName("")
       setTotal("")
+
+      fetchGoals()
     } catch (error) {
       Alert.alert("Error", "Register can't be done.")
       console.log(error)
@@ -73,7 +77,7 @@ export default function Home() {
 
   async function fetchTransactions() {
     try {
-      const response = mocks.transactions
+      const response = useTransactions.findLatest()
 
       setTransactions(
         response.map((item) => ({
